@@ -15,6 +15,36 @@ To provide a well-rounded, customizable AI agent squad that supports your indivi
     b. Chat client
     c. MCP client
 
+```mermaid
+graph TD;
+A[Task]-->B((Innocent));
+A-->C((Everyman));
+A-->D((Hero));
+A-->E((Caregiver));
+A-->F((Explorer));
+A-->G((Rebel));
+A-->H((Lover));
+A-->I((Creator));
+A-->J((Jester));
+A-->K((Sage));
+A-->L((Magician));
+A-->M((Ruler));
+B-->N[Archetype Council Protocol]
+C-->N[Archetype Council Protocol]
+D-->N[Archetype Council Protocol]
+E-->N[Archetype Council Protocol]
+F-->N[Archetype Council Protocol]
+G-->N[Archetype Council Protocol]
+H-->N[Archetype Council Protocol]
+I-->N[Archetype Council Protocol]
+J-->N[Archetype Council Protocol]
+K-->N[Archetype Council Protocol]
+L-->N[Archetype Council Protocol]
+M-->N[Archetype Council Protocol]
+N-->O[Output]
+```
+
+
 ## Team
 
 - Type: RoundRobin
