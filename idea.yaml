@@ -1,0 +1,65 @@
+## config.yaml
+# Global Settings
+global_config:
+  model: "gpt-4"
+  temperature: 0.7
+run_mode: "team" #team, individual
+
+# Team Definitions
+team:
+  - name: "software_dev_team"
+    description: "A software development team creating applications and services"
+    type: "RoundRobin"
+    members: [manager, engineer, reviewer]
+    termination_condition: "Text"
+    termination_detail: "COMPLETE"
+    task: "create_software_mvp"
+
+# Task Definitions
+task:
+  - name: "create_software_mvp"
+    type: "team"
+    objective: "Develop a fully functional Python system that uses AutoGen for multi-agent coordination."
+    constraints: "AutoGen as primary dependency; modular and extensible architecture."
+    deliverables: "Working Python system, configuration examples, 80%+ test coverage, documentation."
+    budget: 10.00
+    task_prompt_override: "Create a software MVP for multi-agent development."
+
+# Individual Agent Definitions
+agents:
+  - name: "ManagerAgent"
+    type: "manager"
+    role: "project_manager"
+    role_definition: "You are a project manager overseeing the workflow."
+    model: "gpt-4"
+    tools: ["task_scheduler", "project_tracking"]
+    behavior: ["assign_tasks", "monitor_progress", "mediate_conflict"]
+    memory:
+      enabled: true
+      max_memory_size: 5
+
+  - name: "EngineerAgent"
+    type: "assistant"
+    role: "engineer"
+    role_definition: "Expert software engineer. Ask for clarifications when needed."
+    model: "gpt-4"
+    tools: ["knowledge_base", "web_scraping"]
+    memory:
+      enabled: true
+      max_memory_size: 10
+
+  - name: "ReviewerAgent"
+    type: "assistant"
+    role: "reviewer"
+    role_definition: "Expert reviewer. Provide critical feedback and clarifications."
+    model: "gpt-4"
+    tools: ["knowledge_base", "web_scraping"]
+    memory:
+      enabled: true
+      max_memory_size: 10
+
+# Tool Definitions
+tools:
+  - name: "github"
+    type: "mcp-server"
+    config: []

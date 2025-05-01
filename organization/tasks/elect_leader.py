@@ -1,0 +1,1 @@
+# Elect a leader from a group of agents, depending on the consensus mechanism and the task.

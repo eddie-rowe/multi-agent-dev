@@ -1,0 +1,68 @@
+{# autogen_script.jinja2 #}
+\"\"\"
+Auto-generated AutoGen AgentChat system
+\"\"\"
+
+# Imports
+import autogen
+{% if global_config.model %}
+from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
+{% endif %}
+
+# Global configuration
+MODEL = "{{ global_config.model }}"
+TEMPERATURE = {{ global_config.temperature }}
+RUN_MODE = "{{ run_mode }}"
+
+# Define Agents
+{% for agent in agents %}
+{{ agent.name }} = autogen.{{ 'UserProxyAgent' if agent.type == 'manager' else 'AssistantAgent' }}(
+    name="{{ agent.name }}",
+    llm_config={
+        "model": "{{ agent.model }}",
+        "temperature": {{ global_config.temperature }},
+    },
+    system_message=\"\"\"{{ agent.role_definition }}\"\"\",
+    tools={{ agent.tools }},
+    memory={{ agent.memory }}
+)
+{% endfor %}
+
+# Define Teams
+{% for team in team %}
+{{ team.name }} = autogen.GroupChat(
+    agents=[{{ ', '.join(member for member in team.members) }}],
+    messages=[],
+    max_round=50,
+    allow_repeat_user=True
+)
+
+{{ team.name }}_manager = autogen.GroupChatManager(
+    groupchat={{ team.name }},
+    llm_config={
+        "model": "{{ global_config.model }}",
+        "temperature": {{ global_config.temperature }},
+    }
+)
+{% endfor %}
+
+# Define Tasks
+{% for t in task %}
+{{ t.name }}_task = {
+    "objective": "{{ t.objective }}",
+    "constraints": "{{ t.constraints }}",
+    "deliverables": "{{ t.deliverables }}",
+    "budget": {{ t.budget }},
+    "task_prompt_override": "{{ t.task_prompt_override }}"
+}
+{% endfor %}
+
+# Runtime Execution
+if __name__ == "__main__":
+    # Start the chat based on run_mode
+    if RUN_MODE == "team":
+        {{ team[0].name }}_manager.run_chat(
+            tasks=[{{ task[0].name }}_task],
+            termination_condition="{{ team[0].termination_condition }}",
+            termination_detail="{{ team[0].termination_detail }}"
+        )

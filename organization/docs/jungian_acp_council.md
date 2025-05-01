@@ -87,3 +87,5 @@ N-->O[Output]
 
 - Cron
 - - 9AM CST
+- Google Calendar
+- User input

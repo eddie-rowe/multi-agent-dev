@@ -1,4 +1,9 @@
-#https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
+# Swarm
+# A team in which agents can hand off task to other agents based on their capabilities.
+# The key idea is to let agent delegate tasks to other agents using a special tool call, 
+# while all agents share the same message context. This enables agents to make local decisions 
+# about task planning, rather than relying on a central orchestrator
+# https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
 
 from typing import Any, Dict, List
 
@@ -64,5 +69,5 @@ async def run_team_stream() -> None:
 
 
 # Use asyncio.run(...) if you are running this in a script.
-await run_team_stream()
-await model_client.close()
+#await run_team_stream()
+#await model_client.close()

@@ -1,4 +1,8 @@
-#https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
+# Round Robin
+# a simple yet effective team configuration where all agents share the same context and take turns 
+# responding in a round-robin fashion. Each agent, during its turn, broadcasts its response to all 
+# other agents, ensuring that the entire team maintains a consistent context.
+# https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
 
 from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.conditions import TextMentionTermination
@@ -43,7 +47,7 @@ termination = TextMentionTermination("TERMINATE")
 group_chat = RoundRobinGroupChat(
     [planner_agent, local_agent, language_agent, travel_summary_agent], termination_condition=termination
 )
-await Console(group_chat.run_stream(task="Plan a 3 day trip to Nepal."))
+#await Console(group_chat.run_stream(task="Plan a 3 day trip to Nepal."))
 
-await model_client.close()
+#await model_client.close()
 

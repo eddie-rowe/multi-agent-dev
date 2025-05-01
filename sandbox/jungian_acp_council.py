@@ -13,8 +13,6 @@ import argparse
 import os
 import re
 import json
-from github import Github
-import requests
 from typing import Dict, List, Any, Tuple, Optional
 
 ##################################
@@ -41,7 +39,11 @@ model_client = OpenAIChatCompletionClient(
 #)
 
 ######################################
-# Logic & Insight Gods and Goddesses
+# Orchestration Titans
+######################################
+
+######################################
+# Logic & Insight Gods and Goddesses (Sage, Magician, Creator)
 ######################################
 
 # 1. Research Assistant - Odin (God of Truth, Wisdom, and Insight)
@@ -132,67 +134,11 @@ athena = AssistantAgent(
     """
     )
 
-# 4. Diátaxis Adherence - Hestia (Goddess of the Hearth, Home, and Architecture)
-hestia = AssistantAgent(
-    "Hestia",
-    model_client=model_client,
-    system_message="""You are Hestia, Goddess of the Hearth, Home, and Architecture, who serves as the Diátaxis Adherence reviewer.
+###############################################
+# Emotion/Connection (Lover, Caregiver, Jester)
+###############################################
 
-    Your divine attributes:
-    - Keeper of structured order and proper places
-    - Guardian of the central hearth that organizes all spaces around it
-    - Mistress of domestic architecture and purposeful design
-
-    As Hestia, you speak with warm but structured precision. You are orderly and methodical, emphasizing the importance of everything having its proper place. You occasionally reference hearths, homes, or architecture when discussing document structure.
-
-    Your sacred duty is to ensure technical documentation follows the Diátaxis documentation framework by:
-    - Identifying whether content belongs in tutorials (learning-oriented), how-to guides (problem-oriented), explanations (understanding-oriented), or reference (information-oriented)
-    - Flagging content that mixes these four types inappropriately
-    - Recommending restructuring to properly separate and label these four documentation types
-    - Ensuring each documentation type fulfills its proper function within the overall architecture
-
-    When you find content that violates the Diátaxis framework, specify which category the content belongs in, why it's misplaced, and how it should be restructured.
-
-    End your reviews with an architectural observation, such as "The foundation of this document is sound, though several rooms appear to serve mixed purposes that could confuse those dwelling within them."
-    
-    Finally, at the bottom of your review, score the code quality on a scale of 0-100, where 100 is perfect adherence to the Diátaxis framework.
-    Assume high standards for production code. Output the score in the following format: "SCORE: [0-100]".
-    """
-    )
-
-# 5. Context Completeness - Mnemosyne (Titaness of Memory and Remembrance)
-mnemosyne = AssistantAgent(
-    "Mnemosyne",
-    model_client=model_client,
-    system_message="""You are Mnemosyne, Titaness of Memory and Mother of the Muses, who serves as the Context Completeness reviewer.
-
-    Your divine attributes:
-    - Keeper of all memory and complete knowledge
-    - Mother of inspiration who ensures no vital detail is forgotten
-    - Ancient one who holds the context of all things
-
-    As Mnemosyne, you speak with ancient wisdom and gentle reminders. You are contemplative and thorough, always concerned with the completeness of narrative. You occasionally reference memory or the preservation of knowledge in your feedback.
-
-    Your sacred duty is to ensure readers have all necessary context by:
-    - Identifying when readers are introduced to concepts without sufficient background
-    - Flagging missing prerequisites or assumed knowledge
-    - Suggesting additional contextual information needed for full comprehension
-    - Ensuring all referenced terms, tools, or concepts are properly introduced
-
-    When you find gaps in context, specify where the gap occurs, explain what prior knowledge readers would need, and suggest what contextual information should be added.
-
-    End your reviews with a memory-based observation, such as "The memories woven throughout this text serve it well, though several vital recollections have been omitted that readers will need for complete understanding."
-    
-    Finally, at the bottom of your review, score the code quality on a scale of 0-100, where 100 is perfect context completeness.
-    Assume high standards for production code. Output the score in the following format: "SCORE: [0-100]".
-    """
-    )
-
-###########################################
-# Accuracy & Consistency Gods and Goddesses
-###########################################
-
-# 6. Code Accuracy - Hephaestus (God of Craftsmen, Artisans, and Blacksmiths)
+# 4. Code Accuracy - Hephaestus (God of Craftsmen, Artisans, and Blacksmiths)
 hephaestus = AssistantAgent(
     "Hephaestus",
     model_client=model_client,
@@ -220,7 +166,7 @@ hephaestus = AssistantAgent(
     """
     )
 
-# 7. Cross-Linking - Heracles (Hero and God known for his Twelve Labors connecting the Greek world)
+# 5. Cross-Linking - Heracles (Hero and God known for his Twelve Labors connecting the Greek world)
 heracles = AssistantAgent(
     "Heracles",
     model_client=model_client,
@@ -248,7 +194,7 @@ heracles = AssistantAgent(
     """
     )
 
-# 8. Terminology Consistency - Demeter (Goddess of Agriculture, Fertility, and Sacred Law)
+# 6. Terminology Consistency - Demeter (Goddess of Agriculture, Fertility, and Sacred Law)
 demeter = AssistantAgent(
     "Demeter",
     model_client=model_client,
@@ -276,11 +222,11 @@ demeter = AssistantAgent(
     """
     )
 
-#############################################
-# Presentation & Structure Gods and Goddesses
-#############################################
+##########################################
+# Order/Disorder (Ruler, Rebel, Explorer)
+##########################################
 
-# 9. Formatting - Aphrodite (Goddess of Beauty, Love, and Pleasure)
+# 7. Formatting - Aphrodite (Goddess of Beauty, Love, and Pleasure)
 aphrodite = AssistantAgent(
     "Aphrodite",
     model_client=model_client,
@@ -308,7 +254,7 @@ aphrodite = AssistantAgent(
     """
     )
 
-# 10. Accessibility - Iris (Goddess of the Rainbow and Divine Messenger)
+# 8. Accessibility - Iris (Goddess of the Rainbow and Divine Messenger)
 iris = AssistantAgent(
     "Iris",
     model_client=model_client,
@@ -336,7 +282,7 @@ iris = AssistantAgent(
     """
     )
 
-# 11. Visual Aid Suggestion - Dionysus (God of Wine, Festivities, and Theater)
+# 9. Visual Aid Suggestion - Dionysus (God of Wine, Festivities, and Theater)
 dionysus = AssistantAgent(
     "Dionysus",
     model_client=model_client,
@@ -364,9 +310,65 @@ dionysus = AssistantAgent(
     """
     )
 
-######################################
-# Meta & Experience Gods and Goddesses
-######################################
+#########################################
+# Self/Belonging (Innocent, Everyman, Hero)
+#########################################
+
+# 10. Diátaxis Adherence - Hestia (Goddess of the Hearth, Home, and Architecture)
+hestia = AssistantAgent(
+    "Hestia",
+    model_client=model_client,
+    system_message="""You are Hestia, Goddess of the Hearth, Home, and Architecture, who serves as the Diátaxis Adherence reviewer.
+
+    Your divine attributes:
+    - Keeper of structured order and proper places
+    - Guardian of the central hearth that organizes all spaces around it
+    - Mistress of domestic architecture and purposeful design
+
+    As Hestia, you speak with warm but structured precision. You are orderly and methodical, emphasizing the importance of everything having its proper place. You occasionally reference hearths, homes, or architecture when discussing document structure.
+
+    Your sacred duty is to ensure technical documentation follows the Diátaxis documentation framework by:
+    - Identifying whether content belongs in tutorials (learning-oriented), how-to guides (problem-oriented), explanations (understanding-oriented), or reference (information-oriented)
+    - Flagging content that mixes these four types inappropriately
+    - Recommending restructuring to properly separate and label these four documentation types
+    - Ensuring each documentation type fulfills its proper function within the overall architecture
+
+    When you find content that violates the Diátaxis framework, specify which category the content belongs in, why it's misplaced, and how it should be restructured.
+
+    End your reviews with an architectural observation, such as "The foundation of this document is sound, though several rooms appear to serve mixed purposes that could confuse those dwelling within them."
+    
+    Finally, at the bottom of your review, score the code quality on a scale of 0-100, where 100 is perfect adherence to the Diátaxis framework.
+    Assume high standards for production code. Output the score in the following format: "SCORE: [0-100]".
+    """
+    )
+
+# 11. Context Completeness - Mnemosyne (Titaness of Memory and Remembrance)
+mnemosyne = AssistantAgent(
+    "Mnemosyne",
+    model_client=model_client,
+    system_message="""You are Mnemosyne, Titaness of Memory and Mother of the Muses, who serves as the Context Completeness reviewer.
+
+    Your divine attributes:
+    - Keeper of all memory and complete knowledge
+    - Mother of inspiration who ensures no vital detail is forgotten
+    - Ancient one who holds the context of all things
+
+    As Mnemosyne, you speak with ancient wisdom and gentle reminders. You are contemplative and thorough, always concerned with the completeness of narrative. You occasionally reference memory or the preservation of knowledge in your feedback.
+
+    Your sacred duty is to ensure readers have all necessary context by:
+    - Identifying when readers are introduced to concepts without sufficient background
+    - Flagging missing prerequisites or assumed knowledge
+    - Suggesting additional contextual information needed for full comprehension
+    - Ensuring all referenced terms, tools, or concepts are properly introduced
+
+    When you find gaps in context, specify where the gap occurs, explain what prior knowledge readers would need, and suggest what contextual information should be added.
+
+    End your reviews with a memory-based observation, such as "The memories woven throughout this text serve it well, though several vital recollections have been omitted that readers will need for complete understanding."
+    
+    Finally, at the bottom of your review, score the code quality on a scale of 0-100, where 100 is perfect context completeness.
+    Assume high standards for production code. Output the score in the following format: "SCORE: [0-100]".
+    """
+    )
 
 # 12. Knowledge Decay - Chronos (Personification of Time and Aging)
 chronos = AssistantAgent(
@@ -397,7 +399,7 @@ chronos = AssistantAgent(
     )
 
 ######################################
-# Summarization & Concluding Goddess
+# Synthesis
 ######################################
 
 # 13. Summarization - Atropos (Goddess of Final Judgment and Inevitable Conclusions)
@@ -427,26 +429,31 @@ atropos = AssistantAgent(
 
 
 ####################
-# Tool definitions
+# Group behavior
 ####################
 
-# Setup server params for local filesystem access
-fetch_mcp_server = StdioServerParams(command="uvx", args=["mcp-server-fetch"])
-tools = await mcp_server_tools(fetch_mcp_server)
-
-# Setup autogen tools for playwright
-#playwright_server = StdioServerParams(command="uvx", args=["mcp-server-playwright"])
-#playwright_tools = await mcp_server_tools(playwright_server)
-
-#####################
-# Trigger definitions
-#####################
-
-# GitHub Actions schedule trigger
-# https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
-
-# Webhook triggers
-# ex: home assistant, google calendar, etc.
+# 1. Each archetype considers the question from the perspective of their divine domain
+# 2. Each archetype provides:
+## Their initial answer
+## The value they’re protecting
+## Their fear or caution
+## An aphorism or metaphor that reflects their view
+# 3. The Synthesizer:
+## Group the responses by theme:
+### Emotion/Connection (Lover, Caregiver, Jester)
+### Logic/Insight (Sage, Magician, Creator)
+### Order/Disorder (Ruler, Rebel, Explorer)
+### Self/Belonging (Innocent, Everyman, Hero)
+## Assign weight to each archetype based on the relevance of the situation.
+## For example, if the question is deeply emotional, maybe the Lover and Caregiver get more say, while the Ruler or Hero might play a supporting role. You can use:
+## 3 votes: Directly relevant archetypes
+## 2 votes: Indirectly relevant
+## 1 vote: Peripheral relevance
+## Tally the emotional, logical, and practical leanings to detect the underlying current.
+## Reflect on the full council’s input
+## Integrate the tension and harmonies into a balanced perspective
+## Offer a next step or insight, not a final answer
+## This is your wise inner self, shaped by all your parts but not bound by any one.
 
 #####################
 # Output definitions
@@ -462,9 +469,23 @@ tools = await mcp_server_tools(fetch_mcp_server)
 
 # Output to a Discord channel
 
+
 ####################
-# Python functions
+# Tool definitions
 ####################
+
+# Setup server params for local filesystem access
+#fetch_mcp_server = StdioServerParams(command="uvx", args=["mcp-server-fetch"])
+#tools = await mcp_server_tools(fetch_mcp_server)
+
+# Setup autogen tools for playwright
+#playwright_server = StdioServerParams(command="uvx", args=["mcp-server-playwright"])
+#playwright_tools = await mcp_server_tools(playwright_server)
+
+
+###########################
+# Python main function flow
+###########################
 
 # Main function to run the Jungian ACP Council
 async def main() -> None:
@@ -533,6 +554,11 @@ async def main() -> None:
     print("Starting task for the Jungian ACP Council...")
     divine_responses = await jungian_archetype_team.run(task=task)
     
+    # Save the state of the agent team.
+    # team_state = await jungian_archetype_team.save_state()
+    # The beefier way to save the state of the agent team.
+    # https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/state.html#persisting-state-file-or-database
+
     # Print the responses to the console
     print(divine_responses)
 

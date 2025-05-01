@@ -117,3 +117,11 @@ multi-agent-dev/
 ```
 
 
+## Gratitude
+
+@article{fourney2024magentic,
+    title={Magentic-one: A generalist multi-agent system for solving complex tasks},
+    author={Fourney, Adam and Bansal, Gagan and Mozannar, Hussein and Tan, Cheng and Salinas, Eduardo and Niedtner, Friederike and Proebsting, Grace and Bassman, Griffin and Gerrits, Jack and Alber, Jacob and others},
+    journal={arXiv preprint arXiv:2411.04468},
+    year={2024}
+}

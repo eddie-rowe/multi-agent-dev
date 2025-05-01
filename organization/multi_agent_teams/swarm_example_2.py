@@ -1,7 +1,12 @@
-#https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
+# Swarm
+# A team in which agents can hand off task to other agents based on their capabilities.
+# The key idea is to let agent delegate tasks to other agents using a special tool call, 
+# while all agents share the same message context. This enables agents to make local decisions 
+# about task planning, rather than relying on a central orchestrator
+# https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/teams.html
 
+# Import the necessary libraries
 from typing import Any, Dict, List
-
 from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.conditions import HandoffTermination, TextMentionTermination
 from autogen_agentchat.messages import HandoffMessage
@@ -102,5 +107,5 @@ research_team = Swarm(
 )
 
 task = "Conduct market research for TSLA stock"
-await Console(research_team.run_stream(task=task))
-await model_client.close()
+#await Console(research_team.run_stream(task=task))
+#await model_client.close()
